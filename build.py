@@ -194,6 +194,9 @@ def build_english(manifest: list[str]) -> list[tuple[str, str]]:
         ("no-swears",     "English No Swears",    lambda: load_google_txt(GOOGLE / "google-10000-english-no-swears.txt")),
         ("usa",           "English USA",          lambda: load_google_txt(GOOGLE / "google-10000-english-usa.txt")),
         ("usa-no-swears", "English USA No Swears",lambda: load_google_txt(GOOGLE / "google-10000-english-usa-no-swears.txt")),
+        ("long",          "English Long Words",   lambda: load_google_txt(GOOGLE / "google-10000-english-usa-no-swears-long.txt")),
+        ("medium",        "English Medium Words", lambda: load_google_txt(GOOGLE / "google-10000-english-usa-no-swears-medium.txt")),
+        ("short",         "English Short Words",  lambda: load_google_txt(GOOGLE / "google-10000-english-usa-no-swears-short.txt")),
         ("misspelled",    "Commonly Misspelled",  lambda: load_monkeytype_json(mt_path("english_commonly_misspelled.json"))),
         ("doubled",       "Double-Letter Words",  lambda: load_monkeytype_json(mt_path("english_doubleletter.json"))),
         ("contractions",  "Contractions",         lambda: load_monkeytype_json(mt_path("english_contractions.json"))),
@@ -207,6 +210,9 @@ def build_english(manifest: list[str]) -> list[tuple[str, str]]:
         "no-swears":      "first20hours/google-10000-english (MIT)",
         "usa":            "first20hours/google-10000-english (MIT)",
         "usa-no-swears":  "first20hours/google-10000-english (MIT)",
+        "long":           "first20hours/google-10000-english (MIT)",
+        "medium":         "first20hours/google-10000-english (MIT)",
+        "short":          "first20hours/google-10000-english (MIT)",
     }
 
     for slug, title, loader in specs:
@@ -353,11 +359,12 @@ def build_specialty(manifest: list[str]) -> list[tuple[str, str]]:
     source_label = "monkeytypegame/monkeytype (GPL-3.0)"
 
     specs = [
-        ("medical", "Medical Terminology", "english_medical.json"),
+        ("medical",      "Medical Terminology",        "english_medical.json"),
+        ("english-450k", "English 450K (full lexicon)","english_450k.json"),
     ]
 
     # Also scan for any other monkeytype files that don't fit english or code
-    # (future-proofing -- currently just medical)
+    # (future-proofing)
 
     for slug, title, filename in specs:
         if not mt_exists(filename):
