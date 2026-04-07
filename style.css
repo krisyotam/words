@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+body {
+  font-family: serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 1em;
+  color: #111;
+}
+
+.text {
+  width: 34em;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.left {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.listing:first-of-type {
+  margin-top: 0.6em;
+}
+
+.listing {
+  width: 40em;
+  text-align: center;
+  margin: 0 auto;
+}
+
+a {
+  color: #00e;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #999;
+  margin: 1em 0;
+}
+
+h1, h2, h3, h4 {
+  font-weight: bold;
+}
+
+dl {
+  margin: 0;
+}
+
+dt {
+  margin: 0;
+}
+
+.back-link {
+  font-family: serif;
+  font-style: italic;
+  font-size: 0.875rem;
+  color: #666;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.back-link:visited {
+  color: #666;
+}
+
+.back-link:hover {
+  color: #111;
+}
+
+.wordlist-meta {
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 1em;
+}
+
+pre.wordlist {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: left;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  border: 1px solid #e5e5e5;
+  padding: 1em;
+  background: #fafafa;
+  border-radius: 2px;
+  margin-top: 1em;
+}
+
+.coming-soon {
+  font-style: italic;
+  color: #666;
+  margin-top: 2em;
+}
+
+@media (max-width: 600px) {
+  .text { width: auto; max-width: 100%; }
+  .listing { width: auto; max-width: 100%; }
+}
