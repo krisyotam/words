@@ -58,6 +58,16 @@ def write_file(path: Path, content: str) -> None:
 # Word-list page
 # ---------------------------------------------------------------------------
 
+COPY_BTN = (
+    '<button class="copy-btn" type="button" '
+    'onclick="var b=this;'
+    "navigator.clipboard.writeText(document.getElementById('wordlist').textContent)"
+    ".then(function(){b.textContent='copied';"
+    "setTimeout(function(){b.textContent='copy'},1500)})"
+    '">copy</button>'
+)
+
+
 def render_wordlist_page(
     title: str,
     words: list[str],
@@ -66,14 +76,14 @@ def render_wordlist_page(
     category_label: str,
 ) -> str:
     word_count = len(words)
-    body = "\n".join(words)
+    body = " ".join(words)
     return (
         HEAD_TEMPLATE.format(css_path="/words/style.css", title=title)
-        + f'<div class="text"><div class="left">\n'
+        + f'<div class="text-wide"><div class="left">\n'
         + f'<a class="back-link" href="/words/{category_slug}/">&larr; back to {category_label}</a>\n'
         + f"<h1>{title}</h1>\n"
-        + f'<p class="wordlist-meta">{word_count:,} words &mdash; source: {source_label}</p>\n'
-        + f'<pre class="wordlist">{body}</pre>\n'
+        + f'<p class="wordlist-meta">{word_count:,} words &mdash; source: {source_label} {COPY_BTN}</p>\n'
+        + f'<p class="wordlist" id="wordlist">{body}</p>\n'
         + "</div></div>\n"
         + FOOT
     )
@@ -126,6 +136,8 @@ def render_root_index(categories: list[tuple[str, str, str]]) -> str:
         HEAD_TEMPLATE.format(css_path="/words/style.css", title="Word Lists")
         + '<div class="text"><div class="left">\n'
         + "<h1>Kris Yotam's Word Lists</h1>\n"
+        + "<blockquote><center><em>I took my Power in my Hand &mdash;<br>"
+        + "And went against the World</em></center></blockquote>\n"
         + "<p>Curated word lists for typing practice. Paste any list into "
         + '<a href="https://monkeytype.com">Monkeytype</a> (or a self-hosted instance) '
         + "to use as a custom word set.</p>\n"
@@ -424,14 +436,22 @@ def main() -> None:
         ),
     )
 
-    print("Building drills/ placeholder ...")
-    write_file(
-        ROOT / "drills" / "index.html",
-        render_placeholder(
-            "Drills",
-            "Coming soon -- LLM-generated symbol drills.",
-        ),
-    )
+    # drills/ index is owned by words-drill once any real drill exists.
+    # Only emit the placeholder if the directory has no drill files yet.
+    drills_dir = ROOT / "drills"
+    drills_dir.mkdir(parents=True, exist_ok=True)
+    real_drills = [p for p in drills_dir.glob("*.html") if p.name != "index.html"]
+    if not real_drills:
+        print("Building drills/ placeholder ...")
+        write_file(
+            drills_dir / "index.html",
+            render_placeholder(
+                "Drills",
+                "Coming soon -- LLM-generated symbol drills.",
+            ),
+        )
+    else:
+        print(f"Skipping drills/index.html (managed by words-drill, {len(real_drills)} drill(s) present)")
 
     print("Building root index.html ...")
     categories = [
